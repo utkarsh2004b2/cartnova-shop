@@ -1,125 +1,139 @@
-# 🛒 SpringCart – Full-Stack E-Commerce Web Application  
-### Built with Spring Boot, Razorpay, Google OAuth2, Thymeleaf & MySQL
+# 🛒 CartNova – Full-Stack E-Commerce Web Application
+### Built with Java, Spring Boot, Google OAuth2, Thymeleaf & MySQL
 
-SpringCart is a fully functional **production-grade e-commerce application** featuring a modern UI, complete shopping flow, admin product management, secure Google OAuth login, Razorpay payment gateway, order history with PDF invoices, and a clean backend architecture.  
-The project is deployed live on Render and uses MySQL hosted on Aiven.
-
----
-
-## 🚀 Live Demo  
-🔗 **https://springcart.onrender.com**
+CartNova is a full-featured **e-commerce web application** with a modern UI, a complete shopping flow, admin product management, secure Google OAuth login, order history with PDF invoices, and a layered backend architecture.
+The app is deployed on Render (Docker) and uses MySQL hosted on Aiven.
 
 ---
 
-## 📌 Overview  
-SpringCart provides a smooth shopping experience like a real e-commerce platform (Flipkart/Amazon–style) including:
+## 🚀 Live Demo
+🔗 **https://cartnova-ookc.onrender.com**
 
-- Product browsing  
-- Add to cart  
-- Checkout summary  
-- Razorpay payment  
-- Order tracking  
-- Invoice downloads  
-- Admin product management  
-- Google OAuth authentication  
-- Clean UI with responsive design  
+> Note: The app runs on free-tier hosting, so the first load after inactivity can take 30–50 seconds. Google login works only for approved test users while the OAuth app is in testing mode.
+
+---
+
+## 📌 Overview
+CartNova provides a shopping experience similar to a real e-commerce platform, including:
+
+- Product browsing and search
+- Add to cart
+- Checkout summary
+- Razorpay payment integration (disabled in the live demo)
+- Order tracking
+- Invoice downloads
+- Admin product management
+- Google OAuth authentication
+- Responsive UI
 
 ---
 
 ## 🎯 Key Features
 
-### 👤 **User Features**
+### 👤 User Features
 - Login using **Google OAuth 2.0**
-- View all products with clean product cards  
-- Product Details page  
-- Add to Cart with live cart count update  
-- Checkout page displaying:
-  - Product price  
-  - Delivery charge  
-  - Discounts  
-  - Payable total  
-- **Razorpay Payment Gateway (Test Mode)**  
-- Automatic order creation on successful payment  
-- Payment success & failure redirection  
-- View all previous orders under **My Orders**  
-- **Order Details** page showing:
-  - Order ID  
-  - Product details  
-  - Amount  
-  - Timestamps  
-  - Payment status  
-- **Download Invoice (PDF)** for each order  
+- View all products with clean product cards
+- Product details page
+- Add to cart with live cart count update
+- Checkout page showing:
+  - Product price
+  - Delivery charge
+  - Discounts
+  - Payable total
+- **Razorpay payment integration** (test mode; needs API keys, not enabled in the live demo)
+- Order creation on successful payment
+- Payment success and failure redirection
+- View previous orders under **My Orders**
+- **Order Details** page showing order ID, product details, amount, timestamps and payment status
+- **Download invoice (PDF)** for each order
 
----
+### 🛠️ Admin Features
+Admin users are identified by email addresses configured in the `ADMIN_EMAILS` environment variable.
 
-### 🛠️ **Admin Features**
-Admin is detected using the admin email inside **CustomAuthSuccessHandler**.
-
-- Google OAuth2 login → auto redirect to admin panel  
-- Add product (with validations)  
-- Edit product (form auto-fills current values)  
-- Delete product  
+- Google OAuth2 login with admin role
+- Add product (with server-side validations)
+- Edit product (form pre-filled with current values)
+- Delete product
 - Product image upload:
-  - JPG only  
-  - Max 5MB  
-  - URL or file upload  
-- Admin UI automatically hides:
-  - Add to cart  
-  - Buy buttons  
+  - JPG / PNG only
+  - Max 1 MB
+  - Stored in the database
+- Admin UI hides the Add to Cart and Buy buttons
 
-⚠ **Admin cannot order or add to cart.**
+⚠ **Admin accounts cannot order or add to cart.**
 
 ---
 
 ## 💳 Payment Integration (Razorpay)
-
-- Integrated Razorpay checkout UI (Test Mode)  
-- Backend validates signature & payment  
-- **Success Flow**:
-  - Save order to DB  
-  - Clear cart  
-  - Redirect to success page  
-- **Failure Flow**:
-  - Keep cart unchanged  
-  - Redirect to failure page  
+- Razorpay checkout integrated using the Razorpay Java SDK
+- Backend verifies the payment signature
+- **Success flow:** save order to the database, clear the cart, redirect to the success page
+- **Failure flow:** keep the cart unchanged, redirect to the failure page
+- Requires `RAZORPAY_KEY` and `RAZORPAY_SECRET` (test keys). These are not configured in the live demo.
 
 ---
 
-## 📄 Invoice Generation  
-Each successful order generates a **PDF invoice**, containing:
+## 📄 Invoice Generation
+Each successful order generates a **PDF invoice** with:
 
-- Order ID  
-- Product details  
-- Payment status  
-- Total amount  
-- Order timestamp  
+- Order ID
+- Product details
+- Payment status
+- Total amount
+- Order timestamp
 
 ---
 
 ## 🔧 Technologies Used
 
-### **Backend**
-- Spring Boot 3  
-- Spring MVC  
-- Spring Security (OAuth2 Login)  
-- Spring Data JPA  
-- Hibernate  
-- Razorpay Java SDK  
+### Backend
+- **Java 21**
+- Spring Boot 3
+- Spring MVC
+- Spring Security (OAuth2 Login)
+- Spring Data JPA
+- Hibernate
+- Maven
+- Razorpay Java SDK
 
-### **Frontend**
-- HTML5  
-- CSS3  
-- JavaScript  
-- Thymeleaf  
-- Bootstrap  
+### Frontend
+- HTML5
+- CSS3
+- JavaScript
+- Thymeleaf
+- Bootstrap
 
-### **Database**
-- **MySQL (Hosted on Aiven Cloud)**  
+### Database
+- MySQL (hosted on Aiven Cloud)
 
-### **Deployment**
+### Deployment
+- Docker
 - Render (Web Service)
 
 ---
 
-## 📁 Project Structure
+## ⚙️ Configuration
+Secrets are not stored in the code. Set these environment variables before running:
 
+| Variable | Description |
+|---|---|
+| `DB_URL` | JDBC URL, e.g. `jdbc:mysql://localhost:3306/cartnova` |
+| `DB_USERNAME` | Database username |
+| `DB_PASSWORD` | Database password |
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
+| `ADMIN_EMAILS` | Comma-separated admin email addresses |
+| `RAZORPAY_KEY` | Razorpay key ID (optional) |
+| `RAZORPAY_SECRET` | Razorpay key secret (optional) |
+
+---
+
+## ▶️ Run Locally
+1. Install **Java 21** and **MySQL**, then create a database.
+2. Create a Google OAuth client and add `http://localhost:8080/login/oauth2/code/google` as a redirect URI.
+3. Set the environment variables from the table above.
+4. Start the app:
+```bash
+   ./mvnw spring-boot:run
+```
+5. Open
