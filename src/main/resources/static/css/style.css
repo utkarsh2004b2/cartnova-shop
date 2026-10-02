@@ -1,0 +1,599 @@
+/* CLEANED + CONSOLIDATED style.css (NO logic removed, all duplicates fixed) */
+
+:root {
+  --primary-color: #3b5d50;
+  --secondary-color: #f9bf29;
+  --text-dark: #2f2f2f;
+  --text-light: #7a7a7a;
+  --bg-light: #eff2f1;
+  --white: #ffffff;
+  --font-family-sans-serif: "Inter", sans-serif;
+  --font-family-serif: "Inter", sans-serif;
+}
+
+body {
+  font-family: var(--font-family-sans-serif);
+  background-color: #F5F5DC;
+  color: var(--text-light);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-sans-serif);
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: .3s all ease;
+}
+
+a:hover {
+  color: var(--text-dark);
+}
+
+/* =============================== BUTTONS =============================== */
+.btn {
+  border-radius: 30px;
+  padding: 12px 30px;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: #324f46;
+  border-color: #324f46;
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: var(--text-dark);
+}
+
+.btn-secondary:hover {
+  background-color: #f8b810;
+  border-color: #f8b810;
+}
+
+.btn-white-outline {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: var(--white);
+}
+
+.btn-white-outline:hover {
+  background: var(--white);
+  color: var(--primary-color);
+}
+
+/* =============================== NAVBAR =============================== */
+.custom-navbar {
+  background: var(--primary-color) !important;
+  padding: 20px 0;
+}
+
+.custom-navbar .navbar-brand {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.custom-navbar .navbar-brand span {
+  color: var(--secondary-color);
+}
+
+.custom-navbar .custom-navbar-nav .nav-link {
+  color: var(--white);
+  padding: 10px 15px !important;
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.7;
+  transition: .3s all ease;
+}
+
+.custom-navbar .custom-navbar-nav .nav-link:hover,
+.custom-navbar .custom-navbar-nav .nav-link.active {
+  opacity: 1;
+  color: var(--white);
+}
+
+.custom-navbar .custom-navbar-nav .nav-link:not(.dropdown-toggle) {
+  position: relative;
+}
+
+.custom-navbar .custom-navbar-nav .nav-link:not(.dropdown-toggle)::after {
+  content: '';
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  background-color: var(--secondary-color);
+  width: 0;
+  transition: width 0.3s ease-out;
+}
+
+.custom-navbar .custom-navbar-nav .nav-link:not(.dropdown-toggle):hover::after,
+.custom-navbar .custom-navbar-nav .nav-link:not(.dropdown-toggle).active::after {
+  width: calc(100% - 30px);
+}
+
+.custom-navbar .custom-navbar-cta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.custom-navbar .search-input {
+  border-radius: 30px;
+  border: none;
+  background-color: rgba(255,255,255,0.1);
+  color: var(--white);
+}
+
+.custom-navbar .search-input::placeholder {
+  color: rgba(255,255,255,0.4);
+}
+
+.custom-navbar #searchForm .search-btn {
+  background: var(--secondary-color);
+  border: none;
+  color: var(--text-dark);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Fix Bootstrap distortion inside the round search button */
+.custom-navbar #searchForm .search-btn {
+  padding: 0 !important;
+  line-height: 0 !important;
+}
+
+.custom-navbar #searchForm {
+  display: flex;
+  align-items: center;
+}
+
+.custom-navbar .btn-outline-dark {
+  border-color: rgba(255,255,255,0.3);
+  color: var(--white);
+  border-radius: 30px;
+}
+
+.custom-navbar .btn-outline-dark:hover {
+  background: var(--white);
+  color: var(--primary-color);
+}
+
+/* =============================== BADGE OVERRIDES =============================== */
+.custom-navbar .badge.admin-badge {
+  background-color: var(--secondary-color) !important;
+  color: var(--text-dark) !important;
+  font-weight: 700;
+}
+
+.custom-navbar .badge.user-badge {
+  background-color: #090469 !important;
+  color: #fff !important;
+  font-weight: 700;
+}
+
+/* =============================== GLOWING SEARCH =============================== */
+.glow-search {
+  box-shadow: 0 0 10px var(--secondary-color);
+  animation: pulseGlow 1.8s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 6px var(--secondary-color); }
+  50% { box-shadow: 0 0 16px var(--secondary-color); }
+  100% { box-shadow: 0 0 6px var(--secondary-color); }
+}
+
+/* =============================== PROFILE DROPDOWN (CLEAN + MERGED) =============================== */
+.profile-dropdown-container {
+  position: relative;
+}
+
+.profile-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.profile-dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  width: 180px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 0;
+  list-style: none;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 4000;
+}
+
+/* Hover */
+.profile-dropdown-container:hover .profile-dropdown-menu,
+.profile-dropdown-menu:hover {
+  display: block;
+}
+
+/* Click (Bootstrap toggles .show) */
+.profile-dropdown-container.show .profile-dropdown-menu {
+  display: block;
+}
+
+.profile-dropdown-menu li a {
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  color: #333;
+  display: block;
+}
+
+.profile-dropdown-menu li a:hover {
+  background: #f5f5f5;
+}
+
+.profile-dropdown-menu li.logout-btn a {
+  background: var(--secondary-color) !important;
+  color: var(--text-dark) !important;
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+.profile-dropdown-menu li.logout-btn a:hover {
+  background: #f8b810 !important;
+  color: #000 !important;
+}
+
+/* =============================== HERO =============================== */
+.hero {
+  background: var(--primary-color);
+  padding: 8rem 0;
+  position: relative;
+}
+
+.hero .intro-excerpt {
+  position: relative;
+  z-index: 2;
+}
+
+.hero h1 {
+  color: #fff;
+  font-weight: 700;
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.hero p {
+  color: rgba(255,255,255,0.6);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+
+
+/* Apply overlay ONLY on Home page */
+.home-hero .hero-img-wrap::before {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 100%;
+  height: 100%;
+  background: var(--secondary-color);
+  border-radius: 20px;
+  opacity: 0.3;
+}
+
+
+/* =============================== PRODUCT GRID =============================== */
+.product-section {
+  padding: 6rem 0;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 3rem;
+}
+
+.product-grid .card {
+  border: none;
+  background: transparent;
+  border-radius: 15px;
+  margin-bottom: 30px;
+  transition: .3s;
+}
+
+.product-grid .card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.15);
+}
+
+.product-grid .card-img-top {
+  border-radius: 15px;
+  object-fit: contain;
+  aspect-ratio: 1/1;
+  margin-bottom: 15px;
+}
+
+/* =============================== FOOTER =============================== */
+
+
+ :root {
+   --primary-color: #3b5d50;
+   --secondary-color: #f9bf29;
+   --text-dark: #2f2f2f;
+   --text-light: #7a7a7a;
+   --bg-light: #eff2f1;
+   --white: #ffffff;
+   --footer-bg: #141b1b;
+ }
+
+body {
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: #F5F5DC;
+  color: var(--text-light);
+}
+
+/* ========== MODERN ECOM FOOTER ========== */
+.footer-section {
+  background: radial-gradient(circle at top left, #3b5d50 0, #141b1b 45%, #0c1211 100%);
+  color: rgba(255, 255, 255, 0.87);
+  padding: 2.2rem 0 0.9rem;
+  position: relative;
+  overflow: hidden;
+  font-size: 0.97rem;
+}
+
+.footer-section .container {
+  position: relative;
+  z-index: 1;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 18px;
+}
+
+/* Brand Block / Logo */
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1em;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+  text-decoration: none;
+}
+.footer-brand span {
+  color: var(--secondary-color);
+  font-size: 1.5em;
+}
+
+/* Social icons */
+.footer-social {
+  display: flex;
+  gap: 0.66em;
+  margin-top: 0.5em;
+}
+.footer-social a {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(249, 191, 41, 0.10);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.05rem;
+  transition: all 0.2s;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+.footer-social a:hover {
+  background: var(--secondary-color);
+  color: #252323;
+  transform: translateY(-3px) scale(1.08);
+  border-color: var(--secondary-color);
+}
+
+/* Links columns */
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em 3.5em;
+  margin-bottom: 1.4rem;
+}
+.footer-col {
+  min-width: 134px;
+  flex: 1 1 10%;
+}
+.footer-col h6 {
+  font-size: 0.93em;
+  font-weight: 600;
+  color: var(--secondary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.72em;
+}
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-col ul li {
+  margin-bottom: 0.36em;
+}
+.footer-col ul li a {
+  color: rgba(255, 255, 255, 0.77);
+  text-decoration: none;
+  font-size: 0.98em;
+  transition: color 0.18s, padding-left 0.19s;
+  position: relative;
+  padding-left: 0;
+}
+.footer-col ul li a:hover {
+  color: var(--secondary-color);
+  padding-left: 5px;
+}
+
+/* Newsletter mini box */
+.footer-newsletter {
+  background: rgba(255,255,255,0.04);
+  border-radius: 14px;
+  padding: 1.1em 1em 1em 1em;
+  margin-bottom: 1.25em;
+  box-shadow: 0 1px 16px 0 rgba(0,0,0,0.08);
+  text-align: left;
+  max-width: 340px;
+  margin-left: 0;
+}
+.footer-newsletter .newsletter-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.72em;
+  margin-bottom: 0.6em;
+}
+.footer-newsletter .newsletter-heading i {
+  font-size: 1.25em;
+  color: var(--secondary-color);
+}
+.footer-newsletter input[type="email"] {
+  border: none;
+  border-radius: 100px;
+  background: rgba(255,255,255,0.08);
+  padding: 0.55em 1.12em;
+  font-size: 1em;
+  margin-right: 0.5em;
+  color: #fff;
+  width: 65%;
+}
+.footer-newsletter input[type="email"]::placeholder {
+  color: rgba(255,255,255,0.46);
+  font-weight: 400;
+}
+.footer-newsletter button {
+  background: var(--secondary-color);
+  color: #191817;
+  font-weight: 600;
+  border: none;
+  border-radius: 100px;
+  padding: 0.47em 1.2em;
+  font-size: 0.97em;
+  margin-top: 0.5em;
+  cursor: pointer;
+  transition: background 0.17s;
+}
+.footer-newsletter button:hover {
+  background: #e6ad09;
+}
+
+/* Payment/Security bar */
+.footer-payments {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-top: 0.9em;
+  font-size: 0.95em;
+  color: rgba(255,255,255,0.79);
+}
+.footer-payments i {
+  color: var(--secondary-color);
+  font-size: 1.12em;
+  margin-right: 0.18em;
+}
+
+/* Copyright bar */
+.footer-copyright {
+  text-align: center;
+  margin-top: 1.2em;
+  font-size: 0.87em;
+  color: rgba(255,255,255,0.7);
+}
+.footer-copyright a {
+  color: rgba(255,255,255,0.5);
+  margin: 0 0.5em;
+  font-size: 0.92em;
+  transition: color 0.18s;
+}
+.footer-copyright a:hover {
+  color: var(--secondary-color);
+}
+
+/* "Sofa img" is now a small, subtle branded product image */
+.sofa-img {
+  position: absolute;
+  right: 1%;
+  bottom: 12%;
+  opacity: 0.17;
+  z-index: 0;
+  display: none;
+}
+.sofa-img img {
+  max-width: 148px;
+  filter: blur(0.2px) drop-shadow(0 6px 18px rgba(0,0,0,0.32));
+  border-radius: 23px;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .footer-grid {
+    flex-wrap: wrap;
+    gap: 2em 1.2em;
+  }
+  .footer-newsletter {
+    margin-bottom: 1.09em;
+    margin-left: 0;
+  }
+}
+@media (max-width: 767px) {
+  .footer-section .container {
+    padding: 0 4vw;
+  }
+  .footer-grid {
+    flex-direction: column;
+  }
+  .footer-newsletter {
+    max-width: 100%;
+    min-width: 180px;
+    padding: 1em 1em;
+    text-align: left;
+  }
+  .footer-brand {
+    margin-bottom: 0.6em;
+  }
+}
+@media (min-width: 992px) {
+  .sofa-img {
+    display: block;
+  }
+}
+
+/* =============================== PAGINATION =============================== */
+.pagination {
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.pagination .page-link {
+  border: none;
+  width: 40px;
+}

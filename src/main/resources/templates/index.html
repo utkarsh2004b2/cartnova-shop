@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title th:text="${title}">CartNova</title>
+
+    <link rel="icon" type="image/x-icon" th:href="@{/assets/online-shopping.png}" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+        /* --- FIXED profile hover over  DROPDOWN CSS HERE --- */
+        :root {
+            --text-light: #7a7a7a;
+        }
+
+        .profile-dropdown-menu {
+            position: absolute;
+            top: 48px;
+            right: 0;
+            background: #fff;
+            width: 180px;
+            list-style: none;
+            padding: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 3000;
+            margin-top:0;
+        }
+        .profile-dropdown-menu li a {
+            display: block;
+            padding: 10px 18px;
+            font-size: 0.9rem;
+            color: #333;
+        }
+        .profile-dropdown-menu li a:hover {
+            background: #f5f5f5;
+        }
+        .profile-dropdown-container:hover .profile-dropdown-menu,
+        .profile-dropdown-menu:hover {
+            display: block !important;
+        }
+
+        /* ===========================
+           HERO SECTION STYLES (kept exactly as provided)
+           =========================== */
+        :root {
+            --primary: #3b5d50;
+            --secondary: #f9bf29;
+            --dark: #2f2f2f;
+            --light: #ffffff;
+            --gray: #eff2f1;
+            --text-muted: #6c757d;
+            --danger: #dc3545;
+            --glass: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { font-family: 'Poppins', sans-serif; overflow-x: hidden; background-color: #f8f9fa; }
+
+        .hero-section { position: relative; min-height: 100vh; width: 100%; background: var(--primary); overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 80px 20px; }
+        .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.6; animation: floatBlob 10s infinite ease-in-out; z-index: 0; }
+        .blob-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: #2a443a; animation-delay: 0s; }
+        .blob-2 { bottom: -10%; right: -5%; width: 400px; height: 400px; background: var(--secondary); opacity: 0.3; animation-delay: -5s; }
+        @keyframes floatBlob { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, -30px); } }
+
+        .container { max-width: 1280px; width: 100%; position: relative; }
+        .hero-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .hero-content { color: var(--light); opacity: 0; transform: translateY(30px); }
+        h1 { font-size: 4rem; line-height: 1.1; font-weight: 700; margin-bottom: 24px; }
+        .highlight-text { color: var(--secondary); position: relative; display: inline-block; }
+        .highlight-text::after { content: ''; position: absolute; bottom: 5px; left: 0; width: 100%; height: 15px; background: rgba(249, 191, 41, 0.3); z-index: -1; transform: skewX(-15deg); }
+        .hero-description { font-size: 1.1rem; line-height: 1.8; color: rgba(255, 255, 255, 0.8); margin-bottom: 40px; max-width: 500px; }
+        .btn-group { display: flex; flex-wrap: wrap; gap: 20px; }
+        .btn { padding: 15px 35px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s ease; position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer; font-size: 1rem; }
+        .btn-primary { background-color: var(--secondary); color: var(--primary); box-shadow: 0 10px 25px rgba(249, 191, 41, 0.3); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(249, 191, 41, 0.5); }
+        .btn-outline { background: transparent; color: var(--light); border: 2px solid rgba(255, 255, 255, 0.3); }
+        .btn-outline:hover { background: var(--light); color: var(--primary); border-color: var(--light); }
+
+        .hero-visual { position: relative; height: 600px; z-index: 2; perspective: 1000px; }
+        .visual-wrapper { width: 100%; height: 100%; position: relative; transition: transform 0.1s ease-out; }
+        .carousel-card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 30px; overflow: hidden; box-shadow: 20px 40px 80px rgba(0, 0, 0, 0.3); z-index: 5; }
+        .carousel-track { display: flex; height: 100%; width: 100%; position: relative; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease-in-out, transform 6s ease; transform: scale(1.1); }
+        .slide.active { opacity: 1; transform: scale(1); z-index: 2; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
+
+        .glass-card { position: absolute; bottom: 40px; left: -30px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--glass-border); padding: 20px; border-radius: 20px; color: white; z-index: 10; width: 220px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); animation: floatCard 4s ease-in-out infinite; }
+        @keyframes floatCard { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .glass-card h4 { font-size: 0.9rem; margin-bottom: 5px; color: var(--secondary); }
+        .glass-card p { font-size: 1.5rem; font-weight: bold; margin: 0; }
+        .glass-card span { font-size: 0.8rem; opacity: 0.8; font-weight: normal; }
+
+        .carousel-controls { position: absolute; bottom: 30px; right: 30px; display: flex; gap: 15px; z-index: 20; }
+        .control-btn { width: 50px; height: 50px; border-radius: 50%; border: none; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(5px); color: white; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .control-btn:hover { background: var(--secondary); color: var(--dark); transform: scale(1.1); }
+
+        .progress-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.2); z-index: 20; }
+        .progress-bar { height: 100%; background: var(--secondary); width: 0%; transition: width 0.1s linear; }
+
+        .stats-badge { position: absolute; top: 40px; right: -20px; background: var(--light); padding: 15px 25px; border-radius: 15px; box-shadow: -10px 10px 30px rgba(0,0,0,0.15); z-index: 9; animation: floatCard 5s ease-in-out infinite reverse; }
+        .stats-badge .stars { color: #FFD700; font-size: 0.8rem; }
+        .stats-badge div { font-weight: 700; color: var(--dark); margin-top: 5px; }
+
+        .product-section { padding: 100px 0; background-color: #ffffff; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-title { font-size: 2.5rem; font-weight: 700; color: var(--dark); position: relative; display: inline-block; margin-bottom: 15px; }
+        .section-title::after { content: ''; display: block; width: 60%; height: 4px; background: var(--secondary); margin: 10px auto 0; border-radius: 2px; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; padding-bottom: 40px; }
+        .product-card { background: white; border-radius: 20px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(59, 93, 80, 0.15); border-color: transparent; }
+        .product-image-wrapper { position: relative; width: 100%; padding-top: 110%; overflow: hidden; background: #f8f9fa; }
+        .product-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; transition: transform 0.6s ease; }
+        .product-card:hover .product-img { transform: scale(1.08); }
+
+        .badge { position: absolute; top: 15px; left: 15px; padding: 6px 14px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; z-index: 2; }
+        .badge.sale { background: var(--danger); color: white; }
+        .badge.new { background: var(--primary); color: white; }
+
+        /* Product card base */
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid transparent;  /* reserve space for yellow border */
+            box-sizing: border-box;
+            transition:
+                    transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                    box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+                    border-color 0.3s ease;
+        }
+
+        /* Hover: bulge + glow + yellow border */
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(59, 93, 80, 0.15), 0 0 20px rgba(249, 191, 41, 0.4);
+            border-color: #f9bf29;   /* yellow border shows, thickness stays 3px */
+        }
+
+        /* Actions (eye button) */
+        .product-actions {
+            position: absolute;
+            bottom: 25px; /* a bit higher so it never gets clipped */
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 5; /* above image/content */
+        }
+
+        .product-card:hover .product-actions {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Action button style */
+        .action-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark);
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: scale(1.1);
+        }
+
+
+        .product-info { padding: 20px; text-align: left; }
+        .product-category { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 5px; }
+        .product-title { font-size: 1.1rem; font-weight: 600; color: var(--dark); margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .product-rating { color: #FFD700; font-size: 0.85rem; margin-bottom: 10px; }
+        .product-rating span { color: #ccc; margin-left: 5px; font-size: 0.8rem; }
+        .product-footer { display: flex; justify-content: space-between; align-items: center; }
+        .product-price { font-size: 1.25rem; font-weight: 700; color: var(--primary); }
+        .old-price { font-size: 0.9rem; color: #bbb; text-decoration: line-through; margin-left: 6px; font-weight: 400; }
+        .add-btn-mobile { display: none; }
+
+        .pagination { display: flex; justify-content: center; list-style: none; gap: 8px; margin-top: 40px; }
+        .pagination li a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; border: 2px solid #e9ecef; color: var(--dark); text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .pagination li a:hover, .pagination li.active a { background-color: var(--primary); border-color: var(--primary); color: white; }
+
+        @media (max-width: 992px) {
+            .hero-section { padding: 100px 20px; height: auto; min-height: auto; }
+            .hero-container { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+            h1 { font-size: 3rem; }
+            .hero-description { margin: 0 auto 30px auto; }
+            .btn-group { justify-content: center; }
+            .hero-visual { height: 500px; width: 90%; margin: 0 auto; }
+            .glass-card { left: 50%; transform: translateX(-50%); bottom: -20px; }
+            .stats-badge { right: 0; }
+        }
+
+        @media (max-width: 576px) {
+            h1 { font-size: 2.2rem; }
+            .hero-visual { height: 350px; width: 100%; }
+            .section-title { font-size: 2rem; }
+            .product-actions { opacity: 1; transform: translate(-50%, 0); bottom: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar fragment -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<!-- HERO SECTION -->
+<section class="hero home-hero">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container hero-container">
+        <!-- Left Content -->
+        <div class="hero-content" id="heroContent">
+            <h1>Welcome to <br> <span class="highlight-text">CartNova</span></h1>
+            <p class="hero-description">
+                Your one-stop destination for premium quality products at unbeatable prices. Explore our exclusive range of fashion, electronics, and home essentials designed to elevate your lifestyle.
+            </p>
+            <div class="btn-group">
+                <a href="#products" class="btn btn-primary">Shop Now <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="/about" class="btn btn-outline"><i class="fa-solid fa-tags"></i> View Deals</a>
+            </div>
+        </div>
+
+        <!-- Right Visual Carousel -->
+        <div class="hero-visual" id="heroVisual">
+            <div class="visual-wrapper" id="tiltWrapper">
+                <div class="carousel-card">
+                    <div class="carousel-track">
+                        <div class="slide active"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=80" alt="Fashion"></div>
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80" alt="Tech"></div>
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=80" alt="Sneakers"></div>
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80" alt="Watch"></div>
+                        <div class="slide"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1200&q=80" alt="Bag"></div>
+                    </div>
+                    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+                </div>
+                <div class="glass-card"><h4>Flash Deal</h4><p>Up to 70% OFF <span>on bestsellers</span></p></div>
+                <div class="stats-badge"><div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div><div>10k+ Happy Customers</div></div>
+                <div class="carousel-controls">
+                    <button class="control-btn" onclick="changeSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="control-btn" onclick="changeSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRODUCT SECTION -->
+<section class="product-section" id="products">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Our Exclusive Products</h2>
+            <p style="color: #666; max-width: 600px; margin: 0 auto;">Browse our top-rated selection of premium items curated just for you.</p>
+        </div>
+
+        <!-- JS inserts products here -->
+        <div class="product-grid" id="productGrid"></div>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-center mt-4">
+            <nav>
+                <ul id="pagination" class="pagination">
+                    <li><a href="#"><i class="fa-solid fa-chevron-left"></i></a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="fa-solid fa-chevron-right"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<div class="why-choose-section">
+    <div class="container">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-lg-6">
+                <h2 class="section-title">Why Choose Us</h2>
+                <p>We provide the best products from around the world. Quality, affordability, and service you can trust.</p>
+
+                <div class="row my-5">
+                    <div class="col-6 col-md-6">
+                        <div class="feature">
+                            <div class="icon"><i class="bi bi-truck"></i></div>
+                            <h3>Fast &amp; Free Shipping</h3>
+                            <p>Reliable and fast delivery, always free.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="feature">
+                            <div class="icon"><i class="bi bi-bag-check"></i></div>
+                            <h3>Easy to Shop</h3>
+                            <p>A seamless and enjoyable shopping experience.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="feature">
+                            <div class="icon"><i class="bi bi-headset"></i></div>
+                            <h3>24/7 Support</h3>
+                            <p>We're here to help, anytime you need us.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-6">
+                        <div class="feature">
+                            <div class="icon"><i class="bi bi-arrow-return-left"></i></div>
+                            <h3>Hassle Free Returns</h3>
+                            <p>Not quite right? No problem. We make returns easy.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="img-wrap">
+                    <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=1000&q=80" alt="Why Choose Us" class="img-fluid shadow-lg" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer fragment -->
+<div th:replace="fragments/footer :: footer"></div>
+
+<!-- SCRIPTS: keep only one copy of each and ensure no HTML inside JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/app.js}" defer></script>
+
+<script>
+    // --- HERO & CAROUSEL LOGIC ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const content = document.getElementById('heroContent');
+        const visual = document.getElementById('heroVisual');
+        setTimeout(() => {
+            if(content) {
+                content.style.opacity = '1';
+                content.style.transform = 'translateY(0)';
+                content.style.transition = 'all 1s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            }
+            if(visual) {
+                visual.style.opacity = '1';
+                visual.style.transition = 'opacity 1.5s ease';
+            }
+        }, 200);
+
+        // start carousel
+        startAutoPlay();
+
+        // render products if function exists
+        if(typeof renderProducts === 'function') renderProducts();
+    });
+
+    let currentSlideIndex = 0;
+    const intervalTime = 5000;
+    let slideInterval;
+
+    function getSlides() { return document.querySelectorAll('.slide'); }
+
+    function showSlide(index) {
+        const slides = getSlides();
+        if(!slides.length) return;
+        if (index >= slides.length) currentSlideIndex = 0;
+        else if (index < 0) currentSlideIndex = slides.length - 1;
+        else currentSlideIndex = index;
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[currentSlideIndex].classList.add('active');
+
+        const progressBar = document.getElementById('progressBar');
+        if(progressBar) {
+            progressBar.style.width = '0%';
+            void progressBar.offsetWidth;
+            progressBar.style.width = '100%';
+            progressBar.style.transition = `width ${intervalTime}ms linear`;
+        }
+    }
+
+    function changeSlide(n) { clearInterval(slideInterval); showSlide(currentSlideIndex + n); startAutoPlay(); }
+
+    function startAutoPlay() { clearInterval(slideInterval); showSlide(currentSlideIndex); slideInterval = setInterval(() => { showSlide(currentSlideIndex + 1); }, intervalTime); }
+
+    // tilt effect for desktop
+    (function setupTilt(){
+        const heroVisual = document.getElementById('heroVisual');
+        const tiltWrapper = document.getElementById('tiltWrapper');
+        if(heroVisual && tiltWrapper && window.innerWidth > 992) {
+            heroVisual.addEventListener('mousemove', (e) => {
+                const rect = heroVisual.getBoundingClientRect();
+                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                const xPercent = x / rect.width; const yPercent = y / rect.height;
+                const rotateX = (0.5 - yPercent) * 20; const rotateY = (xPercent - 0.5) * 20;
+                tiltWrapper.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            heroVisual.addEventListener('mouseleave', () => { tiltWrapper.style.transform = 'rotateX(0) rotateY(0)'; });
+        }
+    })();
+</script>
+
+</body>
+</html>
